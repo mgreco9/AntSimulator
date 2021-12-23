@@ -11,6 +11,7 @@ public class AntController : MonoBehaviour
     private Rigidbody2D rbody;
     private InputManager cinput;
     private DetectorManager dinput;
+    private Transform grabbingPoint;
 
     private GameObject objectHeld;
 
@@ -27,6 +28,10 @@ public class AntController : MonoBehaviour
         dinput = GetComponent<DetectorManager>();
         if (dinput == null)
             Debug.Log("Detector Manager could not be found");
+
+        grabbingPoint = transform.GetChild(0);
+        if (grabbingPoint == null)
+            Debug.Log("Grabbing Point transform could not be found");
     }
 
     // Update is called once per frame
@@ -43,11 +48,11 @@ public class AntController : MonoBehaviour
         AntDetectorInputs detectorInputs = dinput.inputs;
         
         // 4 - Call the ant's actions
-        moveAction(commandInputs);
-        grabAction(commandInputs, detectorInputs);
+        MoveAction(commandInputs);
+        InputGrabAction(commandInputs, detectorInputs);
     }
 
-    private void moveAction(GameInputs commandInputs)
+    private void MoveAction(GameInputs commandInputs)
     {
         // 1 - Retrieve inputs move and turn values
         float inputForward = commandInputs.Forward;
@@ -62,7 +67,7 @@ public class AntController : MonoBehaviour
         rbody.MoveRotation(newRotation);
     }
 
-    private void grabAction(GameInputs commandInputs, AntDetectorInputs detectorInputs)
+    private void InputGrabAction(GameInputs commandInputs, AntDetectorInputs detectorInputs)
     {
         // 1 - Check if the command was pressed
         if (!commandInputs.Grab)
@@ -71,7 +76,7 @@ public class AntController : MonoBehaviour
         // 2 - Check if the ant is not already holding something, if so release the object
         if(objectHeld != null)
         {
-            dropAction(detectorInputs);
+            DropAction(detectorInputs);
             return;
         }
 
@@ -79,16 +84,24 @@ public class AntController : MonoBehaviour
         GameObject foodToGrab = detectorInputs.grabableFood;
         if (foodToGrab != null)
         {
-            foodToGrab.transform.parent = transform;
-            objectHeld = foodToGrab;
+            GrabAction(foodToGrab);
             return;
         }
     }
 
-    private void dropAction(AntDetectorInputs detectorInputs)
+    private void GrabAction(GameObject foodToGrab)
+    {
+        foodToGrab.transform.SetParent(grabbingPoint, true);
+
+        foodToGrab.transform.localPosition = Vector3.zero;
+
+        objectHeld = foodToGrab;
+    }
+
+    private void DropAction(AntDetectorInputs detectorInputs)
     {
         // 1 - Drop the object
-        objectHeld.transform.parent = null;
+        objectHeld.transform.SetParent(null, true);
 
         // 2 - Check if object is drop on base, if so notify the anthill that a food has been brought
         if (detectorInputs.anthillBase != null)
