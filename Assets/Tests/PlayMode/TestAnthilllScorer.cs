@@ -16,6 +16,7 @@ public class TestAnthillScorer
     public IEnumerator Setup()
     {
         MonoBehaviour.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Canvas.prefab"));
+        MonoBehaviour.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Generator.prefab"));
         antObject = MonoBehaviour.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TestPrefabs/AntProgramTest.prefab"), Vector3.zero, Quaternion.identity);
         antHillObject = MonoBehaviour.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AntHill.prefab"), new Vector3(0,1), Quaternion.identity);
 
@@ -56,6 +57,6 @@ public class TestAnthillScorer
 
         // 5 - Assert the score has been altered and food is destroyed
         Assert.AreEqual("Score : 1", scoreText.text);
-        Assert.True(food == null);
+        Assert.False(food.gameObject.activeSelf);
     }
 }

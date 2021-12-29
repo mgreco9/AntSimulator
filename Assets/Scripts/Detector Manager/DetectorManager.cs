@@ -30,6 +30,8 @@ public class DetectorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        inputs = new AntDetectorInputs();
+
         // 1 - Check if any reachable food is detected
         if(detectors.ContainsKey(DetectorType.FOOD_GRAB_DETECTOR))
             inputs.grabableFood = detectors[DetectorType.FOOD_GRAB_DETECTOR]();
@@ -37,5 +39,18 @@ public class DetectorManager : MonoBehaviour
         // 2 - Check if food can be drop in base
         if (detectors.ContainsKey(DetectorType.BASE_DETECTOR))
             inputs.anthillBase = detectors[DetectorType.BASE_DETECTOR]();
+    }
+
+    public GameObject GetDetectedPrefab(DetectorType type)
+    {
+        switch(type)
+        {
+            case DetectorType.FOOD_GRAB_DETECTOR:
+                return inputs.grabableFood;
+            case DetectorType.BASE_DETECTOR:
+                return inputs.anthillBase;
+            default:
+                return null;
+        }
     }
 }

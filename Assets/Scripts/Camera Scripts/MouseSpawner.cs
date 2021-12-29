@@ -5,11 +5,11 @@ using UnityEngine.EventSystems;
 
 public class MouseSpawner : MonoBehaviour
 {
-    [SerializeField] private float spawnRange;
-    [SerializeField] private float frequency;
+    [SerializeField] private float spawnRange = 1f;
+    [SerializeField] private float frequency = 0.1f;
 
     private FoodPool foodPool;
-    private InputManager cinput;
+    private MouseInputManager cinput;
     private List<GameObject> gameObjectsToAvoid;
     private float lastSpawnTimeStamp;
 
@@ -18,14 +18,14 @@ public class MouseSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Awake ()
     {
-        cinput = GetComponent<InputManager>();
+        cinput = GetComponent<MouseInputManager>();
         if (cinput == null)
             Debug.Log("Input Manager could not be found");
     }
 
     void Start()
     {
-        foodPool = FoodPool.getInstance();
+        foodPool = FoodPool.GetInstance();
         if (foodPool == null)
             Debug.Log("Food Pool could not be found");
 
@@ -39,7 +39,7 @@ public class MouseSpawner : MonoBehaviour
     void Update()
     {
         // 1 - Retrieve the command inputs
-        GameInputs commandInputs = cinput.inputs;
+        MouseInputs commandInputs = cinput.inputs;
 
         // 2 - Check if spawn input is identified
         if (!CheckIfSpawnInput(commandInputs))
@@ -56,7 +56,7 @@ public class MouseSpawner : MonoBehaviour
         SpawnObject(spawnPosition);
     }
 
-    private bool CheckIfSpawnInput(GameInputs commandInputs)
+    private bool CheckIfSpawnInput(MouseInputs commandInputs)
     {
         // 1 - Retrieve the mouse inputs
         bool leftMouseDown = commandInputs.LeftMouseDown;
@@ -80,7 +80,7 @@ public class MouseSpawner : MonoBehaviour
         return (leftMousePressed && mouseDownOverWorldFlag && Time.time > (lastSpawnTimeStamp + frequency));
     }
 
-    private Vector3 ComputeSpawnPosition(GameInputs commandInputs)
+    private Vector3 ComputeSpawnPosition(MouseInputs commandInputs)
     {
         // 1 - Retrieve the mouse position
         Vector3 mousePosition = commandInputs.MousePosition;
@@ -120,7 +120,7 @@ public class MouseSpawner : MonoBehaviour
 
     private void SpawnObject(Vector3 position)
     {
-        foodPool.requestPrefabActivation(position);
+        foodPool.RequestPrefabActivation(position);
 
         lastSpawnTimeStamp = Time.time;
     }

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ProgramTestInputs : MonoBehaviour
 {
-    public GameInputs inputs;
+    public AgentInputs inputs;
 
     public float forwardStart = 0f;
     public float turnStart = 0f;
 
     void Awake()
     {
-        InputManager cinput = GetComponent<InputManager>();
+        AgentInputManager cinput = GetComponent<AgentInputManager>();
         cinput.RegisterInputRetriever(RetrieveInputs);
     }
 
@@ -21,7 +21,7 @@ public class ProgramTestInputs : MonoBehaviour
         inputs.Turn = turnStart; 
     }
 
-    public GameInputs RetrieveInputs()
+    public AgentInputs RetrieveInputs()
     {
         return inputs;
     }

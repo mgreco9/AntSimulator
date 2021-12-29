@@ -14,9 +14,9 @@ public class FoodPool : MonoBehaviour
 
     public void Awake()
     {
-        singletonInstantiation();
+        SingletonInstantiation();
     }
-    private void singletonInstantiation()
+    private void SingletonInstantiation()
     {
         if (_instance != null && _instance != this)
         {
@@ -27,17 +27,17 @@ public class FoodPool : MonoBehaviour
             _instance = this;
         }
     }
-    public static FoodPool getInstance()
+    public static FoodPool GetInstance()
     {
         return _instance;
     }
 
     void Start()
     {
-        generatePrefabsInInactivePool(numberOfInstances);
+        GeneratePrefabsInInactivePool(numberOfInstances);
     }
 
-    private void generatePrefabsInInactivePool(int nb)
+    private void GeneratePrefabsInInactivePool(int nb)
     {
         for(int i = 0; i < nb; i++)
         {
@@ -52,11 +52,11 @@ public class FoodPool : MonoBehaviour
         return prefab;
     }
 
-    public GameObject requestPrefabActivation(Vector3 position)
+    public GameObject RequestPrefabActivation(Vector3 position)
     {
         if(inactivePool.Count == 0)
         {
-            generatePrefabsInInactivePool(numberOfInstances);
+            GeneratePrefabsInInactivePool(numberOfInstances);
             numberOfInstances *= 2;
         }
 
@@ -70,12 +70,21 @@ public class FoodPool : MonoBehaviour
         return prefabToActivate;
     }
 
-    public void requestPrefabDeactivation(GameObject prefabToDeactivate)
+    public void RequestPrefabDeactivation(GameObject prefabToDeactivate)
     {
         activePool.Remove(prefabToDeactivate);
 
         prefabToDeactivate.SetActive(false);
 
         inactivePool.Enqueue(prefabToDeactivate);
+    }
+
+    public Transform GetRandomActivePrefab()
+    {
+        if (activePool.Count == 0)
+            return null;
+
+        int randomIdx = Random.Range(0, activePool.Count);
+        return activePool[randomIdx].transform;
     }
 }

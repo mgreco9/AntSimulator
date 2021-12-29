@@ -21,7 +21,7 @@ public class AnthillScorer : MonoBehaviour
         if (_uiManager == null)
             Debug.Log("UI Manager could not be found");
 
-        foodPool = FoodPool.getInstance();
+        foodPool = FoodPool.GetInstance();
         if (foodPool == null)
             Debug.Log("Food Pool could not be found");
     }
@@ -48,6 +48,6 @@ public class AnthillScorer : MonoBehaviour
         score++;
         _uiManager.UpdateScore(score);
 
-        foodPool.requestPrefabDeactivation(food);
+        foodPool.RequestPrefabDeactivation(food);
     }
 }

@@ -7,33 +7,38 @@ using UnityEngine;
 
 namespace Assets.Scripts.Input_Manager
 {
-    class UserInput : MonoBehaviour
+    class UserMouseInput : MonoBehaviour
     {
+        Vector3 mousePreviousPosition;
+
         private void Awake()
         {
-            InputManager cinput = GetComponent<InputManager>();
+            MouseInputManager cinput = GetComponent<MouseInputManager>();
             cinput.RegisterInputRetriever(RetrieveInputs);
         }
 
-        public GameInputs RetrieveInputs()
+        public MouseInputs RetrieveInputs()
         {
-            GameInputs inputs = new GameInputs();
+            MouseInputs inputs = new MouseInputs();
 
-            inputs.Turn = Input.GetAxisRaw("Horizontal");
-            inputs.Forward = Input.GetAxisRaw("Vertical"); 
-            inputs.Grab = Input.GetButtonDown("Grab");
-
-            inputs.MousePosition = mouseScreenPositionToWorldPosition(Input.mousePosition);
+            inputs.MousePosition = MouseScreenPositionToWorldPosition(Input.mousePosition);
             inputs.LeftMouseDown = Input.GetMouseButtonDown(0);
             inputs.LeftMousePressed = Input.GetMouseButton(0);
             inputs.LeftMouseUp = Input.GetMouseButtonUp(0);
+
             inputs.RightMouseDown = Input.GetMouseButtonDown(1);
             inputs.RightMousePressed = Input.GetMouseButton(1);
+            inputs.RightMouseUp = Input.GetMouseButtonUp(1);
+
+            inputs.ScrollWheelDelta = Input.mouseScrollDelta.y;
+
+            inputs.MouseShift = Input.mousePosition - mousePreviousPosition;
+            mousePreviousPosition = Input.mousePosition;
 
             return inputs;
         }
 
-        public Vector3 mouseScreenPositionToWorldPosition(Vector3 localPosition)
+        public static Vector3 MouseScreenPositionToWorldPosition(Vector3 localPosition)
         {
             localPosition.z = Camera.main.nearClipPlane;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(localPosition);

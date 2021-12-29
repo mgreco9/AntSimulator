@@ -94,7 +94,7 @@ public class TestAntController
 
         // 2 - program turn right
         testInputs.inputs.Forward = 0;
-        testInputs.inputs.Turn = 1;
+        testInputs.inputs.Turn = -1;
 
         // 3 - wait next frame 
         yield return new WaitForSeconds(0.05f);
@@ -114,7 +114,7 @@ public class TestAntController
 
         // 2 - program turn right
         testInputs.inputs.Forward = 0;
-        testInputs.inputs.Turn = -1;
+        testInputs.inputs.Turn = 1;
 
         // 3 - wait next frame 
         yield return new WaitForSeconds(0.05f);
@@ -140,7 +140,7 @@ public class TestAntController
         yield return null;
 
         // 3 - Check object is grabbed
-        Assert.AreEqual(antObject.GetInstanceID(), food.transform.parent.gameObject.GetInstanceID());
+        Assert.AreEqual(antObject.GetInstanceID(), food.transform.parent.parent.gameObject.GetInstanceID());
 
         // 4 - Try to release the object
         testInputs.inputs.Grab = true;

@@ -9,7 +9,7 @@ public class AntController : MonoBehaviour
     [SerializeField] private float turnSpeed = 1;
 
     private Rigidbody2D rbody;
-    private InputManager cinput;
+    private AgentInputManager cinput;
     private DetectorManager dinput;
     private Transform grabbingPoint;
 
@@ -21,7 +21,7 @@ public class AntController : MonoBehaviour
         if (rbody == null)
             Debug.Log("Rigid body could not be found");
 
-        cinput = GetComponent<InputManager>();
+        cinput = GetComponent<AgentInputManager>();
         if (cinput == null)
             Debug.Log("Input Manager could not be found");
 
@@ -42,7 +42,7 @@ public class AntController : MonoBehaviour
             return;
            
         // 2 - Retrieve the command inputs
-        GameInputs commandInputs = cinput.inputs;
+        AgentInputs commandInputs = cinput.inputs;
 
         // 3 - Retrieve the detector inputs
         AntDetectorInputs detectorInputs = dinput.inputs;
@@ -52,22 +52,22 @@ public class AntController : MonoBehaviour
         InputGrabAction(commandInputs, detectorInputs);
     }
 
-    private void MoveAction(GameInputs commandInputs)
+    private void MoveAction(AgentInputs commandInputs)
     {
         // 1 - Retrieve inputs move and turn values
         float inputForward = commandInputs.Forward;
         float inputTurn = commandInputs.Turn;
 
         // 2 - Compute new position
-        Vector3 newPosition = MathUtils.computeNewPositionTransformForward(transform, inputForward * forwardSpeed);
+        Vector3 newPosition = transform.position + inputForward * forwardSpeed * transform.up;
         rbody.MovePosition(newPosition);
 
         // 3 - Compute new rotation
-        float newRotation = rbody.rotation - inputTurn * turnSpeed;
+        float newRotation = rbody.rotation + inputTurn * turnSpeed;
         rbody.MoveRotation(newRotation);
     }
 
-    private void InputGrabAction(GameInputs commandInputs, AntDetectorInputs detectorInputs)
+    private void InputGrabAction(AgentInputs commandInputs, AntDetectorInputs detectorInputs)
     {
         // 1 - Check if the command was pressed
         if (!commandInputs.Grab)
