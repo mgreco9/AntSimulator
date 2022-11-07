@@ -1,7 +1,8 @@
-using System.Collections;
+using Assets.Scripts.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static Assets.Scripts.Utils.CustomLogger;
 
 public class MouseSpawner : MonoBehaviour
 {
@@ -16,21 +17,21 @@ public class MouseSpawner : MonoBehaviour
     private bool mouseDownOverWorldFlag = false;
 
     // Start is called before the first frame update
-    void Awake ()
+    void Awake()
     {
         cinput = GetComponent<MouseInputManager>();
         if (cinput == null)
-            Debug.Log("Input Manager could not be found");
+            CustomLogger.LogMessage("Input Manager could not be found", LogFlag.UserInput);
     }
 
     void Start()
     {
         foodPool = FoodPool.GetInstance();
         if (foodPool == null)
-            Debug.Log("Food Pool could not be found");
+            CustomLogger.LogMessage("Food Pool could not be found", LogFlag.UserInput);
 
         gameObjectsToAvoid = new List<GameObject>();
-        gameObjectsToAvoid.Add(AnthillScorer.getInstanceGameObject());
+        gameObjectsToAvoid.Add(AnthillScorer.GetInstanceGameObject());
 
         lastSpawnTimeStamp = Time.time;
     }
@@ -88,8 +89,8 @@ public class MouseSpawner : MonoBehaviour
         // 2 - Compute the local position from the reference
         float range = Random.Range(0, spawnRange);
         float angle = Random.Range(0, 360) * Mathf.Deg2Rad;
-        float xPos = range*Mathf.Cos(angle);
-        float yPos = range*Mathf.Sin(angle);
+        float xPos = range * Mathf.Cos(angle);
+        float yPos = range * Mathf.Sin(angle);
 
         Vector3 randomDiff = new Vector3(xPos, yPos);
 
@@ -100,13 +101,13 @@ public class MouseSpawner : MonoBehaviour
     private bool CheckPositionValid(Vector3 position)
     {
         // 1 - Compute the prefab radius
-        float radius = foodPool.getPrefab().transform.localScale.x/2;
+        float radius = foodPool.GetPrefab().transform.localScale.x / 2;
 
         // 2 - For each game object to avoid
-        foreach(GameObject avoid in gameObjectsToAvoid)
+        foreach (GameObject avoid in gameObjectsToAvoid)
         {
             // 2.1 - Compute the object to avoid radius and positio,
-            float avoidRadius = avoid.transform.localScale.x/2;
+            float avoidRadius = avoid.transform.localScale.x / 2;
             Vector3 avoidPosition = avoid.transform.localPosition;
 
             // 2.2 - If the prefab and the object to avoid intersect, return false

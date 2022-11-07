@@ -1,5 +1,5 @@
-using System.Collections;
 using NUnit.Framework;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -45,7 +45,7 @@ public class TestAntController
 
     [UnityTest]
     public IEnumerator TestControlAntMoveBackward()
-    { 
+    {
         // 1 - Retrieve current position
         Vector3 prevPosition = antObject.transform.position;
 
@@ -88,7 +88,7 @@ public class TestAntController
 
     [UnityTest]
     public IEnumerator TestControlAntTurnRight()
-    { 
+    {
         // 1 - Retrieve current position
         Quaternion prevRotation = antObject.transform.rotation;
 
@@ -108,7 +108,7 @@ public class TestAntController
 
     [UnityTest]
     public IEnumerator TestControlAntTurnLeft()
-    { 
+    {
         // 1 - Retrieve current position
         Quaternion prevRotation = antObject.transform.rotation;
 

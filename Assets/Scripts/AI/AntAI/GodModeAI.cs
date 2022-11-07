@@ -1,60 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
+using static Assets.Scripts.Utils.CustomLogger;
 using UnityEngine;
-using BehaviourTree;
+using System.Collections.Generic;
+using BehaviourTreeLibrary;
 
-public class GodModeAI : BehaviourTreeBase
+public class GodModeAI : BehaviourTreeRunner
 {
-    private AgentInputs inputs;
+    private AgentInputs inputs = new AgentInputs();
     private DetectorManager dinput;
-    private Transform baseLocation;
 
-    private void Awake()
+    protected override void Start()
     {
         AgentInputManager cinput = GetComponent<AgentInputManager>();
         cinput.RegisterInputRetriever(RetrieveInputs);
 
         dinput = GetComponent<DetectorManager>();
         if (dinput == null)
-            Debug.Log("Detector Manager could not be found");
+            LogMessage("Detector Manager could not be found", LogFlag.BehaviorTree);
 
-        baseLocation = GameObject.Find("AntHill").transform;
+        behaviourTree.blackboard["dinput"].B_value = dinput;
+        behaviourTree.blackboard["agent"].B_value = transform;
+        behaviourTree.Bind();
     }
 
-    protected override Node SetupTree()
+    public override void ResetInputs()
     {
-        Node moveToFood = new MoveToLocation(transform, FoodPool.GetInstance().GetRandomActivePrefab);
-        Node dontStopMovingToFood = new Negator(moveToFood);
-        Node checkDetectFood = new CheckDetectPrefab(dinput, DetectorType.FOOD_GRAB_DETECTOR);
-        Node moveUntilFood = new ParallelSelector(new List<Node>() { dontStopMovingToFood, checkDetectFood });
+        Dictionary<string, BlackboardEntry> blackboard = behaviourTree.blackboard;
 
-        Node grabFood = new GrabCommand();
-
-        Node moveToBase = new MoveToLocation(transform, baseLocation);
-        Node checkDetectBase = new CheckDetectPrefab(dinput, DetectorType.BASE_DETECTOR);
-        Node moveUntilBase = new ParallelSelector(new List<Node>() { moveToBase, checkDetectBase });
-
-        Node dropFood = new GrabCommand();
-
-        Node root = new Sequence(new List<Node>() { moveUntilFood, grabFood, moveUntilBase, dropFood});
-        root.InitializeSharedParameters(sharedParameters);
-
-        return root;
+        blackboard["forward"].B_value = 0f;
+        blackboard["turn"].B_value = 0f;
+        blackboard["grab"].B_value = false;
     }
 
     public AgentInputs RetrieveInputs()
     {
-        AgentInputs inputs = new AgentInputs();
+        Dictionary<string, BlackboardEntry> blackboard = behaviourTree.blackboard;
 
-        if(sharedParameters.ContainsKey("Forward"))
-            inputs.Forward = (float) sharedParameters["Forward"];
+        inputs.Forward = (float)blackboard["forward"].B_value;
 
-        if (sharedParameters.ContainsKey("Turn"))
-            inputs.Turn = (float) sharedParameters["Turn"];
+        inputs.Turn = (float)blackboard["turn"].B_value;
 
-        if (sharedParameters.ContainsKey("Grab"))
-            inputs.Grab = (bool) sharedParameters["Grab"];
+        inputs.Grab = (bool)blackboard["grab"].B_value;
 
         return inputs;
     }
 }
+ 

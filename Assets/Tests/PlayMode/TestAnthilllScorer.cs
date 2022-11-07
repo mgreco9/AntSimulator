@@ -1,5 +1,5 @@
-using System.Collections;
 using NUnit.Framework;
+using System.Collections;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -18,7 +18,7 @@ public class TestAnthillScorer
         MonoBehaviour.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Canvas.prefab"));
         MonoBehaviour.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Generator.prefab"));
         antObject = MonoBehaviour.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TestPrefabs/AntProgramTest.prefab"), Vector3.zero, Quaternion.identity);
-        antHillObject = MonoBehaviour.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AntHill.prefab"), new Vector3(0,1), Quaternion.identity);
+        antHillObject = MonoBehaviour.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AntHill.prefab"), new Vector3(0, 1), Quaternion.identity);
 
         yield return null;
 

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
 public class AnthillScorer : MonoBehaviour
@@ -10,23 +9,23 @@ public class AnthillScorer : MonoBehaviour
 
     private int score = 0;
 
-    public void Awake()
+    protected void Awake()
     {
-        singletonInstantiation();
+        SingletonInstantiation();
     }
 
-    public void Start()
+    protected void Start()
     {
         _uiManager = UIManager.getInstance();
         if (_uiManager == null)
-            Debug.Log("UI Manager could not be found");
+            CustomLogger.LogMessage("UI Manager could not be found");
 
         foodPool = FoodPool.GetInstance();
         if (foodPool == null)
-            Debug.Log("Food Pool could not be found");
+            CustomLogger.LogMessage("Food Pool could not be found");
     }
 
-    private void singletonInstantiation()
+    private void SingletonInstantiation()
     {
         if (_instance != null && _instance != this)
         {
@@ -38,7 +37,7 @@ public class AnthillScorer : MonoBehaviour
         }
     }
 
-    public static GameObject getInstanceGameObject()
+    public static GameObject GetInstanceGameObject()
     {
         return _instance.gameObject;
     }

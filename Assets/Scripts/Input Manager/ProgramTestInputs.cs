@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ProgramTestInputs : MonoBehaviour
@@ -18,7 +16,7 @@ public class ProgramTestInputs : MonoBehaviour
     void Start()
     {
         inputs.Forward = forwardStart;
-        inputs.Turn = turnStart; 
+        inputs.Turn = turnStart;
     }
 
     public AgentInputs RetrieveInputs()

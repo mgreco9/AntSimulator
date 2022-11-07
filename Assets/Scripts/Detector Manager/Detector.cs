@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Detector : MonoBehaviour
@@ -20,7 +18,7 @@ public class Detector : MonoBehaviour
     public GameObject DetectObject()
     {
         // 1 - Compute the front direction of the object to check
-        Vector3 rayDirection = MathUtils.computeYAxisDirection(transform);
+        Vector3 rayDirection = MathUtils.ComputeYAxisDirection(transform);
 
         // 2 - Compute the origin
         Vector3 origin = transform.position + rayDirection * minScope;
@@ -42,7 +40,7 @@ public class Detector : MonoBehaviour
             gameObject = hit.collider.gameObject;
         }
 
-        if(debugDraw)
+        if (debugDraw)
             Debug.DrawLine(origin, target, debugColor);
         return gameObject;
     }

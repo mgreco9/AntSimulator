@@ -4,9 +4,9 @@ using UnityEngine;
 public static class MathUtils
 {
 
-    public static Vector3 computeNewPositionTransformForward(Transform transform, float inputForward)
+    public static Vector3 ComputeNewPositionTransformForward(Transform transform, float inputForward)
     {
-        Vector3 forwardDirection = computeYAxisDirection(transform);
+        Vector3 forwardDirection = ComputeYAxisDirection(transform);
         Vector3 moveVector = forwardDirection * inputForward;
 
         Vector3 newPosition = transform.position + moveVector;
@@ -14,7 +14,7 @@ public static class MathUtils
         return newPosition;
     }
 
-    public static Vector3 computeYAxisDirection(Transform transform)
+    public static Vector3 ComputeYAxisDirection(Transform transform)
     {
         float rotation = transform.eulerAngles.z * Mathf.Deg2Rad;
 

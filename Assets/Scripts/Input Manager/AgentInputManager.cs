@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public struct AgentInputs
@@ -22,9 +20,9 @@ public class AgentInputManager : MonoBehaviour
         this.inputRetriever = inputRetriever;
     }
 
-    void Update()
+    protected void Update()
     {
-        if(inputRetriever != null)
+        if (inputRetriever != null)
             inputs = inputRetriever();
     }
 }

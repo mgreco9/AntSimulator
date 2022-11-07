@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,7 +32,7 @@ public class DetectorManager : MonoBehaviour
         inputs = new AntDetectorInputs();
 
         // 1 - Check if any reachable food is detected
-        if(detectors.ContainsKey(DetectorType.FOOD_GRAB_DETECTOR))
+        if (detectors.ContainsKey(DetectorType.FOOD_GRAB_DETECTOR))
             inputs.grabableFood = detectors[DetectorType.FOOD_GRAB_DETECTOR]();
 
         // 2 - Check if food can be drop in base
@@ -43,7 +42,7 @@ public class DetectorManager : MonoBehaviour
 
     public GameObject GetDetectedPrefab(DetectorType type)
     {
-        switch(type)
+        switch (type)
         {
             case DetectorType.FOOD_GRAB_DETECTOR:
                 return inputs.grabableFood;

@@ -1,31 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts.Utils;
 using UnityEngine;
+using static Assets.Scripts.Utils.CustomLogger;
 
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private float MinZoom = 5;
     [SerializeField] private float MaxZoom = 50;
 
-    [SerializeField] private float ZoomSpeed = 1f; 
+    [SerializeField] private float ZoomSpeed = 1f;
     [SerializeField] private float DragSpeed = 1f;
 
     private Camera cam;
     private MouseInputManager cinput;
 
-    void Awake()
+    protected void Awake()
     {
         cinput = GetComponent<MouseInputManager>();
         if (cinput == null)
-            Debug.Log("Input Manager could not be found");
+            CustomLogger.LogMessage("Input Manager could not be found", LogFlag.Camera);
 
         cam = Camera.main;
         if (cam == null)
-            Debug.Log("Camera could not be found");
+            CustomLogger.LogMessage("Camera could not be found", LogFlag.Camera);
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         // 1 - Retrieve the command inputs
         MouseInputs commandInputs = cinput.inputs;
@@ -39,7 +39,7 @@ public class CameraController : MonoBehaviour
         if (!CheckCameraIsDragged(inputs))
             return;
 
-        transform.Translate(-inputs.MouseShift*DragSpeed);
+        transform.Translate(-inputs.MouseShift * DragSpeed);
     }
 
     private bool CheckCameraIsDragged(MouseInputs inputs)

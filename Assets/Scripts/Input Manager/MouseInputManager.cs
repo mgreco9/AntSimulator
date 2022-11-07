@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -33,7 +31,7 @@ public class MouseInputManager : MonoBehaviour
 
     void Update()
     {
-        if(inputRetriever != null)
+        if (inputRetriever != null)
             inputs = inputRetriever();
     }
 }

@@ -1,13 +1,16 @@
-using Assets.Scripts.Input_Manager;
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts.Utils;
+using System;
 using UnityEngine;
+using UnityEngine.Events;
+using static Assets.Scripts.Utils.CustomLogger;
 
 public class AntController : MonoBehaviour
 {
+    // The 
     [SerializeField] private float forwardSpeed = 1;
     [SerializeField] private float turnSpeed = 1;
 
+    // 
     private Rigidbody2D rbody;
     private AgentInputManager cinput;
     private DetectorManager dinput;
@@ -15,43 +18,46 @@ public class AntController : MonoBehaviour
 
     private GameObject objectHeld;
 
-    void Awake()
+    public GameObject action;
+    public DetectorManager detector;
+    public Transform truc;
+
+    protected void Awake()
     {
         rbody = GetComponent<Rigidbody2D>();
         if (rbody == null)
-            Debug.Log("Rigid body could not be found");
+            CustomLogger.LogMessage("Rigid body could not be found", LogFlag.AntController);
 
         cinput = GetComponent<AgentInputManager>();
         if (cinput == null)
-            Debug.Log("Input Manager could not be found");
+            CustomLogger.LogMessage("Input Manager could not be found", LogFlag.AntController);
 
         dinput = GetComponent<DetectorManager>();
         if (dinput == null)
-            Debug.Log("Detector Manager could not be found");
+            CustomLogger.LogMessage("Detector Manager could not be found", LogFlag.AntController);
 
         grabbingPoint = transform.GetChild(0);
         if (grabbingPoint == null)
-            Debug.Log("Grabbing Point transform could not be found");
+            CustomLogger.LogMessage("Grabbing Point transform could not be found", LogFlag.AntController);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected void Update()
     {
-        // 1 - If no input controller, nothing to do
-        if (cinput == null)
-            return;
-           
-        // 2 - Retrieve the command inputs
+        // 1 - Retrieve the command inputs
         AgentInputs commandInputs = cinput.inputs;
 
-        // 3 - Retrieve the detector inputs
+        // 2 - Retrieve the detector inputs
         AntDetectorInputs detectorInputs = dinput.inputs;
-        
-        // 4 - Call the ant's actions
+
+        // 3 - Call the ant's actions
         MoveAction(commandInputs);
         InputGrabAction(commandInputs, detectorInputs);
     }
 
+    /// <summary>
+    /// Move the Ant object based on the command inputs
+    /// </summary>
+    /// <param name="commandInputs">The command inputs containing the instructions sent by the user</param>
     private void MoveAction(AgentInputs commandInputs)
     {
         // 1 - Retrieve inputs move and turn values
@@ -67,6 +73,13 @@ public class AntController : MonoBehaviour
         rbody.MoveRotation(newRotation);
     }
 
+    /// <summary>
+    /// Determine if the grab input has been pressed
+    /// If so, determine if the agent needs to drop the current object or grab the one in reach
+    /// Do nothing if none are possible
+    /// </summary>
+    /// <param name="commandInputs">The command inputs containing the instructions sent by the user</param>
+    /// <param name="detectorInputs">The detector inputs containing the information from the agent's detector</param>
     private void InputGrabAction(AgentInputs commandInputs, AntDetectorInputs detectorInputs)
     {
         // 1 - Check if the command was pressed
@@ -74,7 +87,7 @@ public class AntController : MonoBehaviour
             return;
 
         // 2 - Check if the ant is not already holding something, if so release the object
-        if(objectHeld != null)
+        if (objectHeld != null)
         {
             DropAction(detectorInputs);
             return;
@@ -89,19 +102,33 @@ public class AntController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Grab the object specified in input
+    /// </summary>
+    /// <param name="foodToGrab">The object to grab</param>
     private void GrabAction(GameObject foodToGrab)
     {
+        // 1 - Set the food as local to the ant (grab it)
         foodToGrab.transform.SetParent(grabbingPoint, true);
-
         foodToGrab.transform.localPosition = Vector3.zero;
 
+        // 2 - Change the layer of the food so other ants can't detect it
+        foodToGrab.layer = 0;
+
+        // 3 - Set object held in the cache
         objectHeld = foodToGrab;
     }
 
+    /// <summary>
+    /// Drop the currently held object.
+    /// If detector 
+    /// </summary>
+    /// <param name="detectorInputs"></param>
     private void DropAction(AntDetectorInputs detectorInputs)
     {
         // 1 - Drop the object
         objectHeld.transform.SetParent(null, true);
+        objectHeld.layer = 3;
 
         // 2 - Check if object is drop on base, if so notify the anthill that a food has been brought
         if (detectorInputs.anthillBase != null)
