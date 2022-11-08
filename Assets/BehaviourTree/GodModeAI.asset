@@ -239,8 +239,9 @@ MonoBehaviour:
   - {fileID: -261500845861056302}
   - {fileID: 2314861575297326652}
   - {fileID: -7669886388243795135}
-  viewTransform: {x: 535, y: 2, z: 0}
-  viewScale: {x: 0.7561437, y: 0.7561437, z: 1}
+  viewTransform: {x: 499, y: 76, z: 0}
+  viewScale: {x: 0.65751624, y: 0.65751624, z: 1}
+  viewOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1183308319134521207
 MonoBehaviour:
   m_ObjectHideFlags: 0
