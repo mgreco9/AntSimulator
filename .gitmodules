@@ -1,0 +1,6 @@
+[submodule "Assets/B"]
+	path = Assets/B
+	url = https://github.com/mgreco9/UnityBehaviourTreeLibrary.git
+[submodule "Assets/BehaviourTreeLibrary"]
+	path = Assets/BehaviourTreeLibrary
+	url = https://github.com/mgreco9/UnityBehaviourTreeLibrary.git
