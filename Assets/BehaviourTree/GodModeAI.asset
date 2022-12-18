@@ -107,7 +107,7 @@ MonoBehaviour:
   guid: 0cd8ad3eb22716c40bc535520dcb0940
   gridPosition: {x: -89, y: 294}
   gridSize: {x: 150, y: 85}
-  updateView: 0
+  updateView: 1
 --- !u!114 &-5089602321701127174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
   - {fileID: -261500845861056302}
   - {fileID: 2314861575297326652}
   - {fileID: -7669886388243795135}
-  viewTransform: {x: 499, y: 76, z: 0}
+  viewTransform: {x: 490, y: 40, z: 0}
   viewScale: {x: 0.65751624, y: 0.65751624, z: 1}
   viewOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1183308319134521207
