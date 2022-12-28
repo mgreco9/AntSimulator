@@ -67,7 +67,7 @@ public class FoodPool : MonoBehaviour
     /// <returns>The activated object</returns>
     public GameObject RequestPrefabActivation(Vector3 position)
     {
-        CustomLogger.LogMessage("RequestPrefabActivation : " + activePool.Count);
+        CustomLogger.LogMessage("RequestPrefabActivation : " + activePool.Count, CustomLogger.LogFlag.FoodPool);
         // 1 - Check if any prefab is available, if not double the number of prefabs
         if (inactivePool.Count == 0)
         {
@@ -95,7 +95,7 @@ public class FoodPool : MonoBehaviour
     /// <param name="prefabToDeactivate">The prefab to deactivate</param>
     public void RequestPrefabDeactivation(GameObject prefabToDeactivate)
     {
-        CustomLogger.LogMessage("RequestPrefabDeactivation : " + activePool.Count);
+        CustomLogger.LogMessage("RequestPrefabDeactivation : " + activePool.Count, CustomLogger.LogFlag.FoodPool);
         // 1 - Remove the prefab to deactivate from the active list
         if (!activePool.Remove(prefabToDeactivate))
             return;

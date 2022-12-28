@@ -24,21 +24,18 @@ public class AntController : MonoBehaviour
 
     protected void Awake()
     {
-        rbody = GetComponent<Rigidbody2D>();
-        if (rbody == null)
-            CustomLogger.LogMessage("Rigid body could not be found", LogFlag.AntController);
+        if (!TryGetComponent(out rbody))
+            LogMessage("Rigid body could not be found", LogFlag.AntController);
 
-        cinput = GetComponent<AgentInputManager>();
-        if (cinput == null)
-            CustomLogger.LogMessage("Input Manager could not be found", LogFlag.AntController);
+        if (!TryGetComponent(out cinput))
+            LogMessage("Input Manager could not be found", LogFlag.AntController);
 
-        dinput = GetComponent<DetectorManager>();
-        if (dinput == null)
-            CustomLogger.LogMessage("Detector Manager could not be found", LogFlag.AntController);
+        if (!TryGetComponent(out dinput))
+            LogMessage("Detector Manager could not be found", LogFlag.AntController);
 
         grabbingPoint = transform.GetChild(0);
         if (grabbingPoint == null)
-            CustomLogger.LogMessage("Grabbing Point transform could not be found", LogFlag.AntController);
+            LogMessage("Grabbing Point transform could not be found", LogFlag.AntController);
     }
 
     protected void Update()

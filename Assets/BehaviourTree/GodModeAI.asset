@@ -16,8 +16,8 @@ MonoBehaviour:
   started: 0
   decorators: []
   guid: 1eacac91eecbf6c4db2770c06e37a187
-  gridPosition: {x: -0, y: 145}
-  gridSize: {x: 150, y: 109}
+  gridPosition: {x: -0, y: 145.6}
+  gridSize: {x: 150.40001, y: 109.59999}
   updateView: 0
   children:
   - {fileID: -3007176081234388732}
@@ -86,8 +86,8 @@ MonoBehaviour:
   started: 0
   decorators: []
   guid: e6fd94456caace948a133830df0dab0c
-  gridPosition: {x: 291, y: 294}
-  gridSize: {x: 150, y: 85}
+  gridPosition: {x: 289.99997, y: 295.2}
+  gridSize: {x: 150.40002, y: 84.80002}
   updateView: 0
 --- !u!114 &-5657666863678431687
 MonoBehaviour:
@@ -105,9 +105,9 @@ MonoBehaviour:
   started: 0
   decorators: []
   guid: 0cd8ad3eb22716c40bc535520dcb0940
-  gridPosition: {x: -89, y: 294}
-  gridSize: {x: 150, y: 85}
-  updateView: 1
+  gridPosition: {x: -90.00003, y: 295.2}
+  gridSize: {x: 150.4, y: 84.80002}
+  updateView: 0
 --- !u!114 &-5089602321701127174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   decorators: []
   guid: 5d0c37eaba8457b43bcdb2889ef94f47
   gridPosition: {x: -0, y: 0}
-  gridSize: {x: 150, y: 105}
+  gridSize: {x: 150.40001, y: 105.600006}
   updateView: 0
   child: {fileID: -8448076281760426491}
 --- !u!114 &-4186108714850934494
@@ -177,8 +177,8 @@ MonoBehaviour:
   - {fileID: 2651931567386615349}
   - {fileID: -5089602321701127174}
   guid: 38e1a316bf355e948b34dad847010860
-  gridPosition: {x: -279, y: 294}
-  gridSize: {x: 150, y: 205}
+  gridPosition: {x: -279.60004, y: 295.2}
+  gridSize: {x: 149.6, y: 204.00003}
   updateView: 0
   agent: {fileID: 0}
   targetLocation: {x: 0, y: 0, z: 0}
@@ -239,7 +239,7 @@ MonoBehaviour:
   - {fileID: -261500845861056302}
   - {fileID: 2314861575297326652}
   - {fileID: -7669886388243795135}
-  viewTransform: {x: 490, y: 40, z: 0}
+  viewTransform: {x: 420.8, y: -17.6, z: 0}
   viewScale: {x: 0.65751624, y: 0.65751624, z: 1}
   viewOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1183308319134521207
@@ -260,8 +260,8 @@ MonoBehaviour:
   - {fileID: -4186108714850934494}
   - {fileID: -5783396054648003525}
   guid: a7ec437965374354ca755b2e14962eff
-  gridPosition: {x: 101, y: 294}
-  gridSize: {x: 150, y: 205}
+  gridPosition: {x: 100.39996, y: 295.2}
+  gridSize: {x: 149.6, y: 204.00003}
   updateView: 0
   agent: {fileID: 0}
   targetLocation: {x: 0, y: 0, z: 0}

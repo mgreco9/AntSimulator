@@ -13,8 +13,7 @@ public class GodModeAI : BehaviourTreeRunner
         AgentInputManager cinput = GetComponent<AgentInputManager>();
         cinput.RegisterInputRetriever(RetrieveInputs);
 
-        dinput = GetComponent<DetectorManager>();
-        if (dinput == null)
+        if (!TryGetComponent(out dinput))
             LogMessage("Detector Manager could not be found", LogFlag.BehaviorTree);
 
         behaviourTree.blackboard["dinput"].B_value = dinput;

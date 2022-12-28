@@ -16,22 +16,22 @@ public class MouseSpawner : MonoBehaviour
 
     private bool mouseDownOverWorldFlag = false;
 
-    // Start is called before the first frame update
     void Awake()
     {
-        cinput = GetComponent<MouseInputManager>();
-        if (cinput == null)
-            CustomLogger.LogMessage("Input Manager could not be found", LogFlag.UserInput);
+        if (!TryGetComponent(out cinput))
+            LogMessage("Input Manager could not be found", LogFlag.UserInput);
     }
 
     void Start()
     {
         foodPool = FoodPool.GetInstance();
         if (foodPool == null)
-            CustomLogger.LogMessage("Food Pool could not be found", LogFlag.UserInput);
+            LogMessage("Food Pool could not be found", LogFlag.UserInput);
 
-        gameObjectsToAvoid = new List<GameObject>();
-        gameObjectsToAvoid.Add(AnthillScorer.GetInstanceGameObject());
+        gameObjectsToAvoid = new List<GameObject>
+        {
+            AnthillScorer.GetInstanceGameObject()
+        };
 
         lastSpawnTimeStamp = Time.time;
     }
